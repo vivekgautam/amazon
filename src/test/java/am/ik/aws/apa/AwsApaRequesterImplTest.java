@@ -202,7 +202,6 @@ public class AwsApaRequesterImplTest {
             final String id = ids[i % ids.length];
             Future<ItemLookupResponse> res = exec
                     .submit(new Callable<ItemLookupResponse>() {
-                        @Override
                         public ItemLookupResponse call() throws Exception {
                             ItemLookupRequest request = new ItemLookupRequest();
                             request.getItemId().add(id);

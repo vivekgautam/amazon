@@ -60,6 +60,7 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
         this.secretAccessKey = AwsConfig.getValue("aws.secret.accesskey");
         this.associateTag = AwsConfig.getValue("aws.associate.tag");
         checkArgs(endpoint, accessKeyId, secretAccessKey, associateTag);
+        System.out.println(endpoint);
     }
 
     public AwsApaRequesterImpl(String endpoint, String accessKeyId,
@@ -71,7 +72,15 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
         this.associateTag = associateTag;
         checkArgs(endpoint, accessKeyId, secretAccessKey, associateTag);
     }
-
+    	public void printeraccess() {
+    		System.out.println(accessKeyId);
+    		
+    	}
+    	
+    	
+    
+    
+    	
     private static void checkArgs(String endpoint, String accessKeyId,
                                   String secretAccessKey, String associateTag)
             throws IllegalArgumentException {
@@ -133,20 +142,18 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
 
     }
 
-    @Override
     public ItemSearchResponse itemSearch(ItemSearchRequest request) {
         final AWSECommerceServicePortType port = preparePort();
         final ItemSearch itemSearch = prepareItemSearch(request);
         ItemSearchResponse response = invokeWithRetry(new WebServiceInvoker<ItemSearchResponse>() {
-            @Override
             public ItemSearchResponse invoke() throws WebServiceException {
                 return port.itemSearch(itemSearch);
             }
         });
+    	System.out.println(response);
         return response;
     }
 
-    @Override
     public Response<ItemSearchResponse> itemSearchAsync(
             ItemSearchRequest request) throws ExecutionException,
             InterruptedException {
@@ -186,20 +193,18 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
         return result;
     }
 
-    @Override
     public ItemLookupResponse itemLookup(ItemLookupRequest request) {
         final AWSECommerceServicePortType port = preparePort();
         final ItemLookup itemLookup = prepareItemLookup(request);
         ItemLookupResponse response = invokeWithRetry(new WebServiceInvoker<ItemLookupResponse>() {
-            @Override
             public ItemLookupResponse invoke() throws WebServiceException {
                 return port.itemLookup(itemLookup);
             }
         });
+       
         return response;
     }
 
-    @Override
     public Response<ItemLookupResponse> itemLookupAsync(
             ItemLookupRequest request) throws ExecutionException,
             InterruptedException {
@@ -212,7 +217,6 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
 
     public <T> T getResponseWithRetry(final Response<T> res) {
         return invokeWithRetry(new WebServiceInvoker<T>() {
-            @Override
             public T invoke() throws WebServiceException {
                 try {
                     return res.get();
@@ -240,4 +244,6 @@ public class AwsApaRequesterImpl implements AwsApaRequester {
     public void setRetryInterval(long retryInterval) {
         this.retryInterval = retryInterval;
     }
+    
+
 }
